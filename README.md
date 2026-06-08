@@ -75,3 +75,4 @@ Ver `.env.example` en cada carpeta.
 - **Backend → Railway**: conectar repo, carpeta `/backend`, agregar env vars
 "# PollaMundialista593" 
 "# PollaMundialista593" 
+"# PollaMundialista593" 
