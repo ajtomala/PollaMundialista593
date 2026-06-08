@@ -1,0 +1,47 @@
+// firestore.rules
+// Deploy with: firebase deploy --only firestore:rules
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── Users ─────────────────────────────────────────
+    // Users can only read/write their own document
+    match /users/{uid} {
+      allow read:  if request.auth != null && request.auth.uid == uid;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // ─── Groups ────────────────────────────────────────
+    // Anyone authenticated can read a group (to join)
+    // Only the backend (via Admin SDK) writes groups
+    match /groups/{code} {
+      allow read:  if request.auth != null;
+      allow write: if false; // Backend only via Admin SDK
+    }
+
+    // ─── Matches ───────────────────────────────────────
+    // All authenticated users can read matches
+    // Only backend writes matches (synced from API-Football)
+    match /matches/{matchId} {
+      allow read:  if request.auth != null;
+      allow write: if false; // Backend only
+    }
+
+    // ─── Predictions ───────────────────────────────────
+    // Users can read/write ONLY their own predictions
+    match /predictions/{predId} {
+      allow read:  if request.auth != null
+                   && request.auth.uid == resource.data.uid;
+      allow write: if false; // Backend validates and writes
+    }
+
+    // ─── Leaderboards ──────────────────────────────────
+    // All group members can read the leaderboard
+    // Only backend recalculates and writes
+    match /leaderboards/{groupCode} {
+      allow read:  if request.auth != null;
+      allow write: if false; // Backend only
+    }
+  }
+}

@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { -webkit-tap-highlight-color: transparent; }
+  html { font-size: 16px; }
+  body { @apply font-body bg-gray-50 text-gray-900; -webkit-font-smoothing: antialiased; }
+  input[type=number] { -moz-appearance: textfield; }
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+}
+
+@layer components {
+  /* Result chips */
+  .result-chip {
+    @apply inline-flex items-center gap-1 text-[11px] font-black px-3 py-1.5 rounded-full;
+  }
+  .result-chip.exact  { @apply bg-green-100 text-green-800; }
+  .result-chip.win    { @apply bg-amber-100 text-amber-800; }
+  .result-chip.miss   { @apply bg-red-100 text-red-800; }
+  .result-chip.open   { @apply bg-blue-100 text-ec-blue; }
+  .result-chip.locked { @apply bg-gray-100 text-gray-500; }
+  .result-chip.live   { @apply bg-green-500 text-white; }
+
+  /* Hero badge */
+  .hero-badge {
+    @apply inline-flex items-center gap-1 bg-white/15 rounded-lg px-2 py-1 text-[11px] text-white/75 font-bold;
+  }
+
+  /* Safe area bottom */
+  .safe-b { padding-bottom: env(safe-area-inset-bottom, 0px); }
+}
